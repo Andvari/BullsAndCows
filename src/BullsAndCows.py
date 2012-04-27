@@ -123,23 +123,26 @@ class Arbiter():
             my_v3 = int((val - my_v1*1000 - my_v2*100)/10)
             my_v4 = int((val - my_v1*1000 - my_v2*100 - my_v3*10))
             
-            if ((my_v1==self.v1)|(my_v1==self.v2)|(my_v1==self.v3)|(my_v1==self.v4)):
-                Bulls = Bulls + 1
-            if ((my_v2==self.v1)|(my_v2==self.v2)|(my_v2==self.v3)|(my_v2==self.v4)):
-                Bulls = Bulls + 1
-            if ((my_v3==self.v1)|(my_v3==self.v2)|(my_v3==self.v3)|(my_v3==self.v4)):
-                Bulls = Bulls + 1
-            if ((my_v4==self.v1)|(my_v4==self.v2)|(my_v4==self.v3)|(my_v4==self.v4)):
-                Bulls = Bulls + 1
+            if ((my_v1==self.v2)|(my_v1==self.v3)|(my_v1==self.v4)): Bulls += 1
+            if ((my_v2==self.v2)|(my_v2==self.v3)|(my_v2==self.v4)): Bulls += 1
+            if ((my_v3==self.v2)|(my_v3==self.v3)|(my_v3==self.v4)): Bulls += 1
+            if ((my_v4==self.v2)|(my_v4==self.v3)|(my_v4==self.v4)): Bulls += 1
         
             if (my_v1==self.v1):
-                Cows = Cows + 1
+                Bulls += 1
+                Cows  += 1
+                 
             if (my_v2==self.v2):
-                Cows = Cows + 1
+                Bulls += 1
+                Cows  += 1
+                
             if (my_v3==self.v3):
-                Cows = Cows + 1
+                Bulls += 1
+                Cows  += 1
+                
             if (my_v4==self.v4):
-                Cows = Cows + 1
+                Bulls += 1
+                Cows  += 1
                 
             print str(Bulls) + str(Cows)
         
