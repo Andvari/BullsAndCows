@@ -7,6 +7,12 @@ Created on 18.04.2012
 import wx
 import random
 
+class Tablo(wx.Panel):
+    def __init__(self, *args, **kwargs):
+        super(Tablo, self).__init__(*args, **kwargs)
+        tbl = wx.Panel(self, wx.ID_ANY)
+        
+
 class MainWindow(wx.Frame):
     TurnCounter = 0
     myval = 0
@@ -50,6 +56,9 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.OnBtn, self.btn8)
         self.Bind(wx.EVT_BUTTON, self.OnBtn, self.btn9)
         
+        self.sw  = wx.ScrolledWindow(self, wx.ID_ANY, pos = (130, 30), size = (180, 90), style = wx.VSCROLL)
+        self.tbl = wx.StaticText(self.sw, wx.ID_ANY)
+        
         self.Show()
         
         self.myArbiter.newGame()
@@ -65,7 +74,7 @@ class MainWindow(wx.Frame):
         self.myval = (self.myval*10)+int(e.GetEventObject().GetLabel())
         self.TurnCounter += 1
         if (self.TurnCounter == 4):
-            print self.myval
+            ##print self.myval
             self.myArbiter.makeTurn(self.myval)
             self.TurnCounter = 0
             self.myval = 0
@@ -107,16 +116,17 @@ class Arbiter():
         while ((self.v4==self.v1)|(self.v4==self.v2)|(self.v4==self.v3)):
             self.v4 = random.randint(1, 9)
             
-        print "New Game"
-        print "Value maked"
-        print str(self.v1) + str(self.v2) + str(self.v3) + str(self.v4)
+        ##print "New Game"
+        ##print "Value maked"
+        ##print str(self.v1) + str(self.v2) + str(self.v3) + str(self.v4)
     
     def makeTurn(self, val):
         Bulls = 0
         Cows = 0
         if (val == (((self.v1*10)+self.v2)*10+self.v3)*10+self.v4):
-            print "Success"
-            print "I am making " + str(val)
+            pass
+            #print "Success"
+            #print "I am making " + str(val)
         else:
             my_v1 = int((val/1000))
             my_v2 = int((val - my_v1*1000)/100)
@@ -144,7 +154,24 @@ class Arbiter():
                 Bulls += 1
                 Cows  += 1
                 
-            print str(Bulls) + str(Cows)
+            #print str(Bulls) + str(Cows)
+            
+            
+class History():
+    turns   = []
+    results = []
+    def __init__(self):
+        pass
+    
+    def push(self, turn, res):
+        self.turns.append(turn)
+        self.results.append(res)
+    
+    def pop(self):
+        string_result = ""
+        for i in range(5):
+            string_result += self.turns[len(self.turns) - 5 - i] + ": " + self.results[len(self.results) - 5 - i] + "\n"
+        return string_result
         
 if __name__ == '__main__':
     MainApp = wx.App()
